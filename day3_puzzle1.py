@@ -10,7 +10,7 @@ def read_input(file):
     return input_data
 
 
-def get_visited_points(wire):
+def get_visited_points(wire: list):
     """Creates list with all x,y points passed
 
     :param wire: instructions for wire routing
@@ -26,33 +26,28 @@ def get_visited_points(wire):
         directions.append(command[0])
         distances.append(int(command[1:]))
 
-    # print(directions)
-    # print(distances)
-
     # Starting point (0, 0)
-    x = y = 0
+    x = y = steps = 0
     visited_points = []
 
-    # Append visited edges
+    # Append visited points
     for direct, dist in zip(directions, distances):
         if direct == 'R':
-            for i in range(1, dist + 1):
+            for i in range(dist):
                 x += 1
                 visited_points.append((x, y))
         elif direct == 'L':
-            for i in range(1, dist + 1):
+            for i in range(dist):
                 x -= 1
                 visited_points.append((x, y))
         elif direct == 'U':
-            for i in range(1, dist + 1):
+            for i in range(dist):
                 y += 1
                 visited_points.append((x, y))
         elif direct == 'D':
-            for i in range(1, dist + 1):
+            for i in range(dist):
                 y -= 1
                 visited_points.append((x, y))
-
-        visited_points.append((x, y))
 
     return visited_points
 
@@ -66,19 +61,22 @@ def intersections(wire1_points: list, wire2_points: list):
     :returns: list of instersection points for the two wires
     """
 
+    # Much slower solution
+    # intersects = [point for point in wire1_points if point in wire2_points]
+
     intersects = list(set(wire1_points).intersection(set(wire2_points)))
 
     return intersects
 
 
-def manh_distance(intersects):
+def manh_distance(intersects: list):
     """Calculates manhattan distance of intersection points to central port
 
     :param intersects: list of intersection points
 
     :returns: list of manhattan distance per point
     """
-    distances = [abs(point[0]) + abs(point[1]) for point in intersects]
+    distances = [abs(x) + abs(y) for (x, y) in intersects]
     return distances
 
 
@@ -95,6 +93,4 @@ def closest_intersection(wire1, wire2):
 if __name__ == "__main__":
     file = 'inputs/day3_input.txt'
     wires = read_input(file)
-    print("Wire 1: ", wires[0][:10])
-    print("Wire 2:", wires[1][:10])
     print("Min distance: ", closest_intersection(wires[0], wires[1]))

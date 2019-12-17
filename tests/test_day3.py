@@ -29,3 +29,6 @@ def test_min_steps():
     assert day3_puzzle2.min_steps(wire1, wire2) == 610
     assert day3_puzzle2.min_steps(wire3, wire4) == 410
 
+
+
+
