@@ -95,4 +95,6 @@ def closest_intersection(wire1, wire2):
 if __name__ == "__main__":
     file = 'inputs/day3_input.txt'
     wires = read_input(file)
+    print("Wire 1: ", wires[0][:10])
+    print("Wire 2:", wires[1][:10])
     print("Min distance: ", closest_intersection(wires[0], wires[1]))
